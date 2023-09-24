@@ -1,0 +1,68 @@
+
+.main{
+    min-height:94.5vh;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: space-between; */
+    gap: 20px;
+}
+.title{
+    margin-top: 4rem;
+    color: #e9ecef;
+    font-size: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Oooh Baby', cursive;
+}
+.arrow {
+  position: relative;
+  margin: 0 auto;
+  width: 50px;
+  margin-top: -4rem;
+}
+.arrow .curve {
+	border: 2px solid #b3c5d6;
+	border-color: transparent transparent transparent #c4cbd8;
+	height: 360px;
+	width: 400px;
+	border-radius: 0px 50px 50px 350px;
+}
+
+.arrow .point {
+	position: absolute;
+	left: 103px;
+	top: 258px;
+}
+
+.arrow .point:before, .arrow .point:after {
+	border: 1px solid #cbd5e1;
+	height: 25px;
+	content: "";
+	position: absolute;
+}
+
+.arrow .point:before {
+	top: -11px;
+	left: -11px;
+	transform:rotate(-74deg);
+	-webkit-transform:rotate(-74deg);
+  -moz-transform:rotate(-74deg);
+  -ms-transform: rotate(-74deg);
+}
+
+.arrow .point:after {
+  top: -20px;
+	left: 5px;
+	transform:rotate(12deg);
+	-webkit-transform: rotate(12deg);
+  -moz-transform:rotate(12deg);
+  -ms-transform: rotate(12deg);
+}
+
+.upload{
+    width: 10rem;
+    margin-left: 55rem;
+    margin-top: -5rem;
+    z-index: 20;
+}

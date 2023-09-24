@@ -1,25 +1,26 @@
-import logo from './logo.svg';
-import './App.css';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { PrimeReactProvider, PrimeReactContext } from 'primereact/api';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+import './App.css';
+import HomePage from './pages/Home';
+
+
+const router = createBrowserRouter([
+  {
+    path: '/',
+    // errorElement:<ErrorPage />,
+    id:'root',
+    children:[
+        { index: true,
+          element: <HomePage/>,
+        },
+    ]
+  },
+])
+
+
+const App=()=> {
+  return <PrimeReactProvider> <RouterProvider router={router} /> </PrimeReactProvider>;
 }
 
 export default App;

@@ -1,9 +1,21 @@
 .footer{
     display: flex;
+    justify-content: space-between;
     height: 40px;
     background-color:#232f42;
     color: rgb(207, 214, 219);
 }
 .footer_text{
     display: flex;
+    margin-left: 1rem;
+    justify-content: center;
+    align-items: center;
+}
+.social_media{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-right: 2rem;
+
 }

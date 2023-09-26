@@ -1,65 +1,106 @@
 import Footer from "../components/Footer";
 import classes from './Home.module.css'
+import { Link } from 'react-router-dom'; 
 import { useRef, useState, useEffect } from "react";
-import { UPLOAD_FOLDER, S3_BUCKET, MAX_FILE_SIZE, AWS_REGION } from "../constants";
+import { UPLOAD_FOLDER, S3_BUCKET, MAX_FILE_SIZE, AWS_REGION, VIDEO_LAMBDA } from "../constants";
 import { Toast } from 'primereact/toast';
 import { FileUpload } from 'primereact/fileupload';
 import { S3Client, PutObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
+import {LambdaClient, ListFunctionsCommand, InvokeCommand, LogType} from "@aws-sdk/client-lambda";
+
+import { Buffer } from 'buffer';
 
 
 const HomePage = ()=>{
-    const client = new S3Client({ 
-        region: AWS_REGION,
-        credentials: {
-            secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
-            accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID
-        }
-    });
-    
-    useEffect(()=>{
-        console.log(process.env)
-    },[])
-
     const toast = useRef(null);
     const [videoPath, setVideoPath]= useState(null);
+    const [gifURL, setGifURL] = useState('');
 
     const getFilePath = (filename) => {
         const httpPrefix = "https://";
 
-        return httpPrefix + S3_BUCKET + '.s3.' + AWS_REGION + '.amazonaws.com/' + UPLOAD_FOLDER + '/' + filename;
+        return httpPrefix + S3_BUCKET + '.s3.' + AWS_REGION + '.amazonaws.com/' + UPLOAD_FOLDER  + filename;
+    }
+    const getGifUrl = (filename) => {
+        const httpPrefix = "https://";
+
+        return httpPrefix + S3_BUCKET + '.s3.' + AWS_REGION + '.amazonaws.com/' + filename;
     }
     const onSelect = async (e) => {
         
-        // const command = new ListObjectsV2Command({
-        //     Bucket: 'meri-rastila'
-        // });
-        // const result = await client.send(command);
         if (e.files.length > 0) {
             const file = e.files[0];
             const path = getFilePath(file.name);
             console.log('file:', path);
-            if (file.size > MAX_FILE_SIZE){
+            if (file.size > MAX_FILE_SIZE) {
                 toast.current.show({ severity:'warn', summary: 'Error', detail: 'File size is too large' });
                 return;
             }
+
+            // handle S3 upload
+            const s3_client = new S3Client({ 
+                region: AWS_REGION,
+                credentials: {
+                    secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+                    accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID
+                }
+            });
+
+
             const command = new PutObjectCommand({
                 Bucket: S3_BUCKET,
                 Key: UPLOAD_FOLDER + file.name,
                 Body: file,
             });
-            // https://meri-rastila.s3.eu-north-1.amazonaws.com/test/Helsinki.jpg
 
-            const result = await client.send(command);
+            const result = await s3_client.send(command);
             if (result){
                 toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
                 setVideoPath(path);
-            }else{
+            } else{
                 toast.current.show({ severity:'error', summary: 'Error', detail: 'Could not upload File' });
             }
-            console.log(result);
-        }
-    }
 
+            // invoke lambda function to create a GIF
+            // pass a path argument
+            const lambdaResponse = await invoke(VIDEO_LAMBDA, { 'path': UPLOAD_FOLDER + file.name });
+            const gifS3Path = JSON.parse(lambdaResponse).body;
+            const gifUrl = getGifUrl(gifS3Path);
+
+            console.log(JSON.parse(lambdaResponse));
+            console.log(gifUrl);
+            setGifURL(gifUrl);
+            toast.current.show({ severity: 'info', summary: 'Success', detail: 'GIF created!' });
+            
+        }
+        console.log('no file')
+    }
+    const invoke = async (funcName, payload) => {
+        const lambdaClient = new LambdaClient({ 
+            region: AWS_REGION,
+            credentials: {
+                secretAccessKey: process.env.REACT_APP_AWS_SECRET_ACCESS_KEY,
+                accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID
+            }
+        });    
+
+        const command = new InvokeCommand({
+          FunctionName: funcName,
+          Payload: JSON.stringify(payload),
+          LogType: LogType.Tail,
+        });
+      
+        const { Payload } = await lambdaClient.send(command);
+        const result = Buffer.from(Payload).toString();
+
+        return result;
+    };
+    const testLambda = async () => {
+        console.log('test lambda');
+        const res = await invoke(VIDEO_LAMBDA, {'test': 'motan'})
+        console.log(res);
+    }
+    console.log(videoPath)
     return(
         <div>
             <div className={classes.main}>
@@ -74,6 +115,10 @@ const HomePage = ()=>{
                                 type="video/mp4">
                             </source>
                         </video>}
+                        {gifURL && 
+                            <div className={classes.gif_container}>
+                                <Link to={gifURL} className={classes.gif} >Click Here To Get Your GIF!</Link>
+                            </div>}
                     </div>
                     <div className={classes.arrow}>
                         <div className={classes.curve}></div>

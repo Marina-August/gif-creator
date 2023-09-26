@@ -105,7 +105,7 @@ const HomePage = ()=>{
         <div>
             <div className={classes.main}>
                 <div className={classes.title_container}>
-                    <p className={classes.title}>Make a cool Gif from your Video! <span className={classes.size}>(max size 10 Mb)</span></p>
+                    <p className={classes.title}>Make a cool Gif from your Video! <span className={classes.size}>(max size 50 Mb)</span></p>
                 </div>
                 <div className={classes.video_arrow}>
                     <div className={classes.video}>

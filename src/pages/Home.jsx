@@ -127,7 +127,7 @@ const HomePage = ()=>{
                 </div>
                 <div className={classes.upload}>
                     <Toast ref={toast}></Toast>
-                    <FileUpload mode="basic" name="" url="" accept="video/*,image/*" onSelect={onSelect} auto />  
+                    <FileUpload mode="basic" name="" url="" accept="video/*" onSelect={onSelect} auto />  
                 </div>
             </div>
             <Footer/>

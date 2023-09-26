@@ -15,6 +15,10 @@ const HomePage = ()=>{
             accessKeyId: process.env.REACT_APP_AWS_ACCESS_KEY_ID
         }
     });
+    
+    useEffect(()=>{
+        console.log(process.env)
+    },[])
 
     const toast = useRef(null);
     const [videoPath, setVideoPath]= useState(null);

@@ -1,4 +1,9 @@
 .footer{
+    display: flex;
     height: 40px;
-    background-color: azure;
+    background-color:#232f42;
+    color: rgb(207, 214, 219);
+}
+.footer_text{
+    display: flex;
 }

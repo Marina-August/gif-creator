@@ -1,12 +1,12 @@
 
 .main{
-    min-height:94.5vh;
+    min-height:94.6vh;
     display: flex;
     flex-direction: column;
     /* justify-content: space-between; */
     gap: 20px;
 }
-.title{
+.title_container{
     margin-top: 4rem;
     color: #e9ecef;
     font-size: 4rem;
@@ -14,10 +14,20 @@
     justify-content: center;
     align-items: center;
     font-family: 'Oooh Baby', cursive;
+    word-wrap: break-word;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+.title{
+  
+}
+.size{
+    font-size: 1rem;
+    font-family: Arial, Helvetica, sans-serif;
 }
 .arrow {
   position: relative;
-  margin: 0 auto;
+  margin: 0 ;
   width: 50px;
   margin-top: -4rem;
 }
@@ -59,10 +69,135 @@
   -moz-transform:rotate(12deg);
   -ms-transform: rotate(12deg);
 }
+.upload_button{
+    background-color: #e9ecef;
+}
 
 .upload{
-    width: 10rem;
+    width: 6rem;
     margin-left: 55rem;
     margin-top: -5rem;
     z-index: 20;
 }
+.video_arrow{
+    display: flex;
+    justify-content: flex-start;
+    gap: 8rem;
+    width: 30rem;
+    margin-left: 19rem;
+}
+.video{
+    width: 320px;
+    margin-top: -2.9rem;
+}
+
+
+@media(max-width:1140px){
+    .arrow .curve {
+        height: 260px;
+        width: 300px;
+        border-radius: 0px 50px 50px 350px;
+    }
+
+    .arrow{
+        margin-left: -1rem;
+    }
+    .arrow .point {
+        left: 80px;
+        top: 186px;
+    }
+    .upload{
+        margin-left: 35rem;
+        margin-top: -3rem;
+    }
+    .video_arrow{
+        margin-left: 5rem;
+    }
+
+}
+
+@media(max-width:811px){
+    .arrow .curve {
+        height: 200px;
+        width: 200px;
+        border-radius: 0px 50px 50px 350px;
+    }
+    .arrow{
+    margin-left: -4rem;
+    }
+    .arrow .point {
+        left: 55px;
+        top: 151px;
+    }
+    .upload{
+        margin-left: 28rem;
+        margin-top: -1rem;
+    }
+    .video_arrow{
+        margin-left: 0.2rem;
+    }
+    .title_container{
+        margin-top: 2rem;
+        text-align: center;
+    }
+}
+
+@media(max-width:614px){
+    .arrow .curve {
+        height: 170px;
+        width: 170px;
+        border-radius: 0px 50px 50px 350px;
+    }
+    .arrow{
+    margin-left: -12rem;
+    }
+    .arrow .point {
+        left: 45px;
+        top: 127px;
+    }
+    .upload{
+        margin-left: 18rem;
+        margin-top: 0rem;
+    }
+    .video_arrow{
+        margin-left: 0.2rem;
+        width: 20rem;
+    }
+    .upload{
+        width: 5rem;
+    }
+}
+
+@media(max-width:433px){
+    .arrow .curve {
+        height: 170px;
+        width: 170px;
+        border-radius: 0px 50px 50px 350px;
+    }
+    .arrow{
+    margin-left: -20rem;
+    }
+    .arrow .point {
+        left: 45px;
+        top: 127px;
+    }
+    .upload{
+        margin-left: 12rem;
+        margin-top: 0rem;
+    }
+    .video_arrow{
+        margin-left: 0.2rem;
+        width: 20rem;
+    }
+    .upload{
+        width: 5rem;
+    }
+    .title_container{
+        margin-top: 1rem;
+        font-size: 3.5rem;
+    }
+    .video_arrow{
+        width: 15rem;
+    }
+}
+        

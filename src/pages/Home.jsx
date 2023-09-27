@@ -13,6 +13,7 @@ import { Buffer } from 'buffer';
 
 const HomePage = ()=>{
     const toast = useRef(null);
+    const hiddenFileInput = useRef(null);
     const [videoPath, setVideoPath]= useState(null);
     const [gifURL, setGifURL] = useState('');
 
@@ -26,10 +27,14 @@ const HomePage = ()=>{
 
         return httpPrefix + S3_BUCKET + '.s3.' + AWS_REGION + '.amazonaws.com/' + filename;
     }
+
+    const handleClick = () => {
+        hiddenFileInput.current.click();
+      };
+
     const onSelect = async (e) => {
-        
-        if (e.files.length > 0) {
-            const file = e.files[0];
+        if (e.target.files.length > 0) {
+            const file = e.target.files[0];
             const path = getFilePath(file.name);
             console.log('file:', path);
             if (file.size > MAX_FILE_SIZE) {
@@ -120,14 +125,24 @@ const HomePage = ()=>{
                                 <Link to={gifURL} className={classes.gif} >Click Here To Get Your GIF!</Link>
                             </div>}
                     </div>
-                    <div className={classes.arrow}>
+                    {!videoPath && <div className={classes.arrow}>
                         <div className={classes.curve}></div>
                         <div className={classes.point}></div>
-                    </div>
+                    </div>}
                 </div>
                 <div className={classes.upload}>
                     <Toast ref={toast}></Toast>
-                    <FileUpload mode="basic" name="" url="" accept="video/*" onSelect={onSelect} auto />  
+                    {/* <FileUpload mode="basic" name="" url="" accept="video/*" onSelect={onSelect} auto />   */}
+                    <button className={videoPath? classes.upload_button_video:classes.upload_button} onClick={handleClick}>
+                        <img src="assets/images/upload.png" width="10" height="10" alt="upload-img" className={classes.upload_img}/>
+                        <span>Upload Video</span>
+                    </button>
+                    <input
+                    type="file"
+                    accept="video/*"
+                    onChange={onSelect}
+                    ref={hiddenFileInput}
+                    style={{display: 'none'}}/>
                 </div>
             </div>
             <Footer/>

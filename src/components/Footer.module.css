@@ -17,5 +17,90 @@
     align-items: center;
     gap: 1rem;
     margin-right: 2rem;
+}
+.github:hover{
+    opacity: 100%;
+}
+.github{
+    opacity: 60%;
+    width: 25px;
+    height: 25px;
+}
+.linkedin{
+    opacity: 60%; 
+}
+.linkedin:hover{
+    opacity: 100%;
+}
+.codewars{
+    opacity: 50%; 
+}
+.codewars:hover{
+    opacity: 100%;
+}
+.mail{
+    opacity: 50%; 
+}
+.mail:hover{
+    opacity: 100%;
+}
+
+
+@media(max-width:720px){
+    .creator{
+        display: none;
+    }
+    .footer_text{
+        font-size:medium;
+    }
+    .github{
+        height: 20px;
+        width: 20px;
+    }
+    .linkedin{
+        height: 20px;
+        width: 20px;
+    }
+    .mail{
+        height: 20px;
+        width: 20px;
+    }
+    .codewars{
+        height: 20px;
+        width: 20px;
+    }
+    .social_media{
+        gap: 1rem;
+    } 
+    .footer{
+        justify-content: center;
+        gap:2%;
+        height: 36px;
+    }
+
 
 }
+ @media(max-width:550px){
+    .footer_text{
+        font-size: small;
+    }
+    .github{
+        height: 15px;
+        width: 15px;
+    }
+    .linkedin{
+        height: 15px;
+        width: 15px;
+    }
+    .mail{
+        height: 15px;
+        width: 15px;
+    }
+    .codewars{
+        height: 15px;
+        width: 15px;
+    }
+
+ }
+    
+    

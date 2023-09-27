@@ -19,7 +19,8 @@
     padding-left: 15px;
     padding-right: 15px;
     font-weight: bold;
-    background: linear-gradient(90deg,  #71a2e7, #b4c9e2, #71abe9, #7787f1, #ccd4e4);
+    background: linear-gradient(90deg, #71a2e7, #88b4d3, #acc5df, #a5addc, #ccd4e4);
+    background-size: 200% auto;
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;

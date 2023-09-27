@@ -110,7 +110,7 @@ const HomePage = ()=>{
         <div>
             <div className={classes.main}>
                 <div className={classes.title_container}>
-                    <p className={classes.title}>Make a cool Gif from your Video! <span className={classes.size}>(max size 50 Mb)</span></p>
+                    <p className={classes.title}>Make a cool Gif from your Video! <span className={classes.size}>(maximum 50 MB)</span></p>
                 </div>
                 <div className={classes.video_arrow}>
                     <div className={classes.video}>
@@ -134,7 +134,7 @@ const HomePage = ()=>{
                     <Toast ref={toast}></Toast>
                     {/* <FileUpload mode="basic" name="" url="" accept="video/*" onSelect={onSelect} auto />   */}
                     <button className={videoPath? classes.upload_button_video:classes.upload_button} onClick={handleClick}>
-                        <img src="assets/images/upload.png" width="10" height="10" alt="upload-img" className={classes.upload_img}/>
+                        <img src="assets/images/upload.png" width="13" alt="upload-img" className={classes.upload_img}/>
                         <span>Upload Video</span>
                     </button>
                     <input

@@ -82,7 +82,7 @@
 }
  @media(max-width:550px){
     .footer_text{
-        font-size: small;
+        font-size: x-small;
     }
     .github{
         height: 15px;
@@ -99,6 +99,9 @@
     .codewars{
         height: 15px;
         width: 15px;
+    }
+    .rights_footer{
+        display: none;
     }
 
  }

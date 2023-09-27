@@ -7,7 +7,7 @@ const Footer = ()=>{
      return(
         <div className={classes.footer}>
             <div className={classes.footer_text} >
-                <p >Copyright © {year} Marina Batina.<span className="rights-footer"> &nbsp;All rights reserved &nbsp;&nbsp; |</span> </p>
+                <p >Copyright © {year} Marina Batina.<span className={classes.rights_footer}> &nbsp;All rights reserved &nbsp;&nbsp; |</span> </p>
                 <p className={classes.creator}>&nbsp;Gif Creator v.0.1.1 &nbsp;&nbsp;|</p>
             </div> 
             <div className={classes.social_media} >  

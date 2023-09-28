@@ -160,6 +160,11 @@
     margin-top: -6rem;
     z-index: 20;
 }
+.progress_bar{
+    margin-left: 35rem;
+    margin-bottom: 15rem;
+    margin-top: 5rem;
+}
 .upload_img{
     color: #cbd5e1;
 }
@@ -201,6 +206,9 @@
 .gif:hover{
     color: rgb(78, 67, 238);
 }
+.pot{
+    border-radius: 10px;
+}
 
 
 @media(max-width:1140px){
@@ -223,6 +231,13 @@
     .video{
         margin-left: 16rem;
         margin-top: -3rem;
+    }
+    .progress_bar{
+        margin-left: 23rem;
+        margin-bottom: 10rem;
+    }
+    .title_container{
+        font-size: 3rem;
     }
 
 }
@@ -258,6 +273,10 @@
         margin-left: 6rem;
         margin-top: -6rem;
     }
+    .progress_bar{
+        margin-left: 10rem;
+        margin-bottom: 10rem;
+    }
 }
 
 
@@ -288,6 +307,7 @@
     }
     .video{
         margin-left: 0rem;
+        gap:1rem;
     }
     .upload{
         width: auto;
@@ -302,6 +322,10 @@
     .upload_button_video{
         margin-left: 0rem;
         margin-top: 1rem;
+    }
+    .progress_bar{
+        margin-left: -20rem;
+        margin-bottom: 0rem;
     }
 }
 

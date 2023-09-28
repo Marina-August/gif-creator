@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { useRef, useState, useEffect } from "react";
 import { UPLOAD_FOLDER, S3_BUCKET, MAX_FILE_SIZE, AWS_REGION, VIDEO_LAMBDA } from "../constants";
 import { Toast } from 'primereact/toast';
-import { FileUpload } from 'primereact/fileupload';
+import { ProgressBar } from 'primereact/progressbar';
 import { S3Client, PutObjectCommand, ListObjectsV2Command } from "@aws-sdk/client-s3";
 import {LambdaClient, ListFunctionsCommand, InvokeCommand, LogType} from "@aws-sdk/client-lambda";
 
@@ -16,6 +16,8 @@ const HomePage = ()=>{
     const hiddenFileInput = useRef(null);
     const [videoPath, setVideoPath]= useState(null);
     const [gifURL, setGifURL] = useState('');
+    const [uplodProgress, setUploadProgress] = useState(false);
+    const [gifProgress, setGifProgress] = useState(false);
 
     const getFilePath = (filename) => {
         const httpPrefix = "https://";
@@ -41,7 +43,7 @@ const HomePage = ()=>{
                 toast.current.show({ severity:'warn', summary: 'Error', detail: 'File size is too large' });
                 return;
             }
-
+            setUploadProgress(true);
             // handle S3 upload
             const s3_client = new S3Client({ 
                 region: AWS_REGION,
@@ -60,16 +62,20 @@ const HomePage = ()=>{
 
             const result = await s3_client.send(command);
             if (result){
+                setUploadProgress(false);
                 toast.current.show({ severity: 'info', summary: 'Success', detail: 'File Uploaded' });
                 setVideoPath(path);
             } else{
+                setUploadProgress(false);
                 toast.current.show({ severity:'error', summary: 'Error', detail: 'Could not upload File' });
             }
 
             // invoke lambda function to create a GIF
             // pass a path argument
+            setGifProgress(true);
             const lambdaResponse = await invoke(VIDEO_LAMBDA, { 'path': UPLOAD_FOLDER + file.name });
             const gifS3Path = JSON.parse(lambdaResponse).body;
+            setGifProgress(false);
             const gifUrl = getGifUrl(gifS3Path);
 
             console.log(JSON.parse(lambdaResponse));
@@ -105,33 +111,40 @@ const HomePage = ()=>{
         const res = await invoke(VIDEO_LAMBDA, {'test': 'motan'})
         console.log(res);
     }
-    console.log(videoPath)
+    
+
     return(
         <div>
+            <Toast ref={toast}></Toast>
             <div className={classes.main}>
                 <div className={classes.title_container}>
                     <p className={classes.title}>Make a cool Gif from your Video! <span className={classes.size}>(maximum 50 MB)</span></p>
                 </div>
                 <div className={classes.video_arrow}>
                     <div className={classes.video}>
-                        {videoPath && <video width="320" height="240" controls>
+                        {videoPath && !uplodProgress && <video width="320" height="240" controls>
                             <source 
                                 src={videoPath} 
                                 type="video/mp4">
                             </source>
                         </video>}
-                        {gifURL && 
+                        {gifURL && !uplodProgress &&
                             <div className={classes.gif_container}>
-                                <Link to={gifURL} className={classes.gif} >Click Here To Get Your GIF!</Link>
+                               { !gifProgress && <Link to={gifURL} className={classes.gif} >Click Here To Get Your GIF!</Link>}
+                               { gifProgress && <p className={classes.gif}>GIF is making...&nbsp;<img src="assets/images/pot_1.png" alt="pot" className={classes.pot} width="50px"/></p>}
                             </div>}
                     </div>
-                    {!videoPath && <div className={classes.arrow}>
+                    {!videoPath && !uplodProgress && <div className={classes.arrow}>
                         <div className={classes.curve}></div>
                         <div className={classes.point}></div>
                     </div>}
+                    { uplodProgress && 
+                    <div className={classes.progress_bar}>
+                         <ProgressBar mode="indeterminate" style={{ height: '6px', width:'300px' }}></ProgressBar>
+                     </div>
+                    }
                 </div>
-                <div className={classes.upload}>
-                    <Toast ref={toast}></Toast>
+                {!uplodProgress && <div className={classes.upload}>
                     {/* <FileUpload mode="basic" name="" url="" accept="video/*" onSelect={onSelect} auto />   */}
                     <button className={videoPath? classes.upload_button_video:classes.upload_button} onClick={handleClick}>
                         <img src="assets/images/upload.png" width="13" alt="upload-img" className={classes.upload_img}/>
@@ -143,7 +156,7 @@ const HomePage = ()=>{
                     onChange={onSelect}
                     ref={hiddenFileInput}
                     style={{display: 'none'}}/>
-                </div>
+                </div>}
             </div>
             <Footer/>
         </div>

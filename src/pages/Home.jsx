@@ -131,11 +131,14 @@ const HomePage = ()=>{
                                 type="video/mp4">
                             </source>
                         </video>}
-                        {gifURL && !uplodProgress &&
+                        {gifURL && !gifProgress &&
                             <div className={classes.gif_container}>
-                               { !gifProgress && <Link to={gifURL} className={classes.gif} >Click Here To Get Your GIF!</Link>}
-                               { gifProgress && <p className={classes.gif}>GIF is making...&nbsp;<img src="assets/images/pot_1.png" alt="pot" className={classes.pot} width="50px"/></p>}
+                               <Link to={gifURL} className={classes.gif} >Click Here To Get Your GIF!</Link>
                             </div>}
+                        {gifProgress &&
+                         <div className={classes.gif_container}>
+                             <p className={classes.gif}>GIF is making...&nbsp;<img src="assets/images/pot_1.png" alt="pot" className={classes.pot} width="50px"/></p>
+                         </div>}
                     </div>
                     {!videoPath && !uplodProgress && <div className={classes.arrow}>
                         <div className={classes.curve}></div>

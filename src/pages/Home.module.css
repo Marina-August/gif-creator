@@ -155,10 +155,23 @@
 
 
 .upload{
-    width: 6rem;
+    display: flex;
+    gap:1rem;
+    width: 12.5rem;
     margin-left: 53rem;
-    margin-top: -6rem;
+    margin-top: -8rem;
     z-index: 20;
+    justify-content: center;
+    align-items: center;
+}
+.p_radiobutton{
+    display: flex !important;
+    flex-direction: column !important;
+    gap:1rem !important;
+}
+.radio_label{
+    margin-left: 4px;
+    color: #b8c6db;
 }
 .progress_bar{
     margin-left: 35rem;
@@ -270,8 +283,8 @@
         margin-top: -3rem;
     }
     .upload_button_video{
-        margin-left: 6rem;
-        margin-top: -6rem;
+        margin-left: 2rem;
+        margin-top: 0rem;
     }
     .progress_bar{
         margin-left: 10rem;
@@ -316,7 +329,7 @@
         align-items: center;
     }
     .main{
-        gap:2px;
+        gap:8px;
     }
 
     .upload_button_video{
